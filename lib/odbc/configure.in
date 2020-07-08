@@ -112,6 +112,13 @@ case "$host_os" in
 		;;
 esac
 
+# If odbc is installed into a non-standard location, such as /opt/local,
+# the check for sql.h and sqlext.h needs to take that into account.
+if test "$with_odbc" != "yes" && test "$with_odbc"; then
+    saved_CFLAGS="$CFLAGS"
+    CFLAGS="-isystem $with_odbc/include $saved_CFLAGS"
+fi
+
 dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS([fcntl.h netdb.h stdlib.h string.h sys/socket.h winsock2.h])
